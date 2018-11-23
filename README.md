@@ -2,6 +2,8 @@
 Use the following page for information on the overall setup
 https://miyesite.atlassian.net/wiki/spaces/MIYESPACE1/pages/98305/Parking+Space+Locator
 
+Get the certificates into psensor/certs/piot
+Run the following command from psensor
 > node psensorapp.js <device-id> <certsdir> <lat> <lon>
 e.g. node psensorapp.js piot-device1 certs/piot 22 33
 
