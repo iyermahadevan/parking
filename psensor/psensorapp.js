@@ -1,8 +1,15 @@
 var awsIot = require('aws-iot-device-sdk');
 var INIT_DELAY = 10;
 
+if(process.argv.length < 4) {
+    console.log('Usage: node psensorapp.js <devicename> <lat> <lon>');
+    process.exit();
+}
+
 // var NODE_ID = 'miye-device0';
 var NODE_ID = process.argv[2];
+var LAT = process.argv[3];
+var LON = process.argv[4];
 var TAG = '[' + NODE_ID + ']';
 var node_id_parts = NODE_ID.split('-');
 var type = node_id_parts[0];
@@ -26,8 +33,8 @@ function sendData() {
                 "empty": 1,
                 "timestamp":now,
                 "geoLocation": { // An object specifying latitutde and longitude as plain numbers. Used to build the geohash, the hashkey and geojson data
-                    "latitude": 51.51,
-                    "longitude": -0.13
+                    "latitude": LAT,
+                    "longitude": LON
                 },
             }
         }
