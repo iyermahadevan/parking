@@ -1,23 +1,22 @@
 var awsIot = require('aws-iot-device-sdk');
 var INIT_DELAY = 10;
 
-if(process.argv.length < 4) {
-    console.log('Usage: node psensorapp.js <devicename> <lat> <lon>');
+if(process.argv.length < 5) {
+    console.log('Usage: node psensorapp.js <devicename> <certsdir> <latitude> <longitude>');
     process.exit();
 }
 
 // var NODE_ID = 'miye-device0';
 var NODE_ID = process.argv[2];
-var LAT = process.argv[3];
-var LON = process.argv[4];
+var certs = process.argv[3];
+var lat = process.argv[4];
+var lon = process.argv[5];
 var TAG = '[' + NODE_ID + ']';
-var node_id_parts = NODE_ID.split('-');
-var type = node_id_parts[0];
-console.log(TAG, 'Connecting type:', type, ' deviceId:', NODE_ID, ' ...');
+console.log(TAG, 'Connecting deviceId:', NODE_ID, ' at lat:', lat, ' lon:', lon,  ' ...');
 var thingShadow = awsIot.thingShadow({
-    keyPath: 'certs/' + type + '/private.pem.key',
-    certPath: 'certs/' + type + '/certificate.pem.crt',
-    caPath: 'certs/' + type + '/root-CA.crt.pem',
+    keyPath: certs + '/private.pem.key',
+    certPath: certs + '/certificate.pem.crt',
+    caPath: certs + '/root-CA.crt.pem',
     clientId: NODE_ID,
     host: 'ahxem24ekc6o-ats.iot.us-west-2.amazonaws.com',
     port: 8883,
@@ -33,8 +32,8 @@ function sendData() {
                 "empty": 1,
                 "timestamp":now,
                 "geoLocation": { // An object specifying latitutde and longitude as plain numbers. Used to build the geohash, the hashkey and geojson data
-                    "latitude": LAT,
-                    "longitude": LON
+                    "latitude": lat,
+                    "longitude": lon
                 },
             }
         }
