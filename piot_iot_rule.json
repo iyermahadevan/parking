@@ -1,0 +1,12 @@
+{
+    "sql":"SELECT * from '$aws/things/+/shadow/update/accepted'",
+    "ruleDisabled": false,
+    "actions": [{
+        "dynamoDB": {
+            "tableName":"piot-status-table",
+            "roleArn": "arn:aws:iam::<1234>:role/piot-iot-role",
+            "hashKeyField":"deviceId",
+            "hashKeyValue":"${topic(3)}"
+        }
+    }]
+}

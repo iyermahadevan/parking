@@ -4,8 +4,8 @@ https://miyesite.atlassian.net/wiki/spaces/MIYESPACE1/pages/98305/Parking+Space+
 
 Get the certificates into psensor/certs/piot
 Run the following command from psensor
-> node psensorapp.js <device-id> <certsdir> <lat> <lon>
-e.g. node psensorapp.js piot-device1 certs/piot 22 33
+> node psensorapp.js <device-id> <certsdir> <area> <lat> <lon>
+e.g. node psensorapp.js piot-device1 certs/piot area1 22 33
 
 Generate an auth header
 http://miye-bucket2-parking.s3-website-us-west-2.amazonaws.com/signin.html

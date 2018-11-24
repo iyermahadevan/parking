@@ -1,18 +1,19 @@
 var awsIot = require('aws-iot-device-sdk');
 var INIT_DELAY = 10;
 
-if(process.argv.length < 5) {
-    console.log('Usage: node psensorapp.js <devicename> <certsdir> <latitude> <longitude>');
+if(process.argv.length < 7) {
+    console.log('Usage: node psensorapp.js <devicename> <certsdir> <areaId> <latitude> <longitude>');
     process.exit();
 }
 
 // var NODE_ID = 'miye-device0';
 var NODE_ID = process.argv[2];
 var certs = process.argv[3];
-var lat = process.argv[4];
-var lon = process.argv[5];
+var area = process.argv[4];
+var lat = process.argv[5];
+var lon = process.argv[6];
 var TAG = '[' + NODE_ID + ']';
-console.log(TAG, 'Connecting deviceId:', NODE_ID, ' at lat:', lat, ' lon:', lon,  ' ...');
+console.log(TAG, 'Connecting deviceId:', NODE_ID, ' area:', area, ' at lat:', lat, ' lon:', lon,  ' ...');
 var thingShadow = awsIot.thingShadow({
     keyPath: certs + '/private.pem.key',
     certPath: certs + '/certificate.pem.crt',
@@ -35,6 +36,7 @@ function sendData() {
                     "latitude": lat,
                     "longitude": lon
                 },
+                "area": area
             }
         }
     };
