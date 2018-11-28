@@ -4,6 +4,8 @@ const AWS = require('aws-sdk');
 
 const ddb = new AWS.DynamoDB.DocumentClient();
 
+const parkingImpl = require('parkingImpl');
+
 exports.handler = (event, context, callback) => {
     if (!event.requestContext.authorizer) {
       errorResponse('Authorization not configured', context.awsRequestId, callback);
@@ -13,23 +15,16 @@ exports.handler = (event, context, callback) => {
     const username = event.requestContext.authorizer.claims['cognito:username'];
     // const requestBody = JSON.parse(event.body);
     const parkingLocation = {};
+    //if(event["queryStringParamaters"] === undefined) {
+    //  errorResponse('queryStringParameters not specified', context.awsRequestId, callback);
+    //  return;
+    //}
     parkingLocation.Latitude = event["queryStringParameters"]['Latitude'];
     parkingLocation.Longitude = event["queryStringParameters"]['Longitude'];
-    const area = findArea(parkingLocation);
+    const area = parkingImpl.getArea(parkingLocation);
 
-    findParking(username, area).then(data => {
-        var spots = [];
-        data.Items.forEach(spot => {
-          console.log(spot);
-          var empty = spot.payload.state.reported.empty;
-          if(empty == 1){
-            var deviceId = spot.deviceId;
-            var reported = spot.payload.state.reported;
-            var item = {deviceId:deviceId, reported:reported};
-            console.log(JSON.stringify());
-            spots.push(item);
-          }
-        });
+    scanItems(username, area).then(data => {
+        var spots = parkingImpl.getSpots(data, area);
 
         // Because this Lambda function is called by an API Gateway proxy integration
         // the result object must use the following structure.
@@ -46,12 +41,8 @@ exports.handler = (event, context, callback) => {
     });
 };
 
-function findArea(parkingLocation) {
-    console.log('Finding area for ', parkingLocation.Latitude, ', ', parkingLocation.Longitude);
-    return 1;
-}
-
-function findParking(username, area) {
+function scanItems(username, area) {
+    // TBD use the area to set the scan filters
     var params = {
       TableName: 'piot-status-table'
     };
