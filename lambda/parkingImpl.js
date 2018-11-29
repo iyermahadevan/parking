@@ -10,18 +10,24 @@ module.exports = {
         maxLogitude: parkingLocation.Longitude - longitudeTolerance
       };
   },
+
+  getData: function(ddb, username, area) {
+    // TBD use the area to set the scan filters and the empty filter
+    var params = {
+      TableName: 'piot-status-table'
+    };
+    return ddb.scan(params).promise();
+  },
+
   getSpots: function(data) {
     var spots = [];
     data.Items.forEach(spot => {
       console.log(spot);
-      var empty = spot.payload.state.reported.empty;
-      if(empty == 1){
-        var deviceId = spot.deviceId;
-        var reported = spot.payload.state.reported;
-        var item = {deviceId:deviceId, reported:reported};
-        console.log(JSON.stringify());
-        spots.push(item);
-      }
+      var deviceId = spot.deviceId;
+      var reported = spot.payload.state.reported;
+      var item = {deviceId:deviceId, reported:reported};
+      console.log(JSON.stringify());
+      spots.push(item);
     });
     return spots;
   }

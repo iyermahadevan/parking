@@ -21,9 +21,9 @@ exports.handler = (event, context, callback) => {
     //}
     parkingLocation.Latitude = event["queryStringParameters"]['Latitude'];
     parkingLocation.Longitude = event["queryStringParameters"]['Longitude'];
-    const area = parkingImpl.getArea(parkingLocation);
 
-    scanItems(username, area).then(data => {
+    const area = parkingImpl.getArea(parkingLocation);
+    parkingImpl.getData(ddb, username, area).then(data => {
         var spots = parkingImpl.getSpots(data, area);
 
         // Because this Lambda function is called by an API Gateway proxy integration
@@ -41,13 +41,6 @@ exports.handler = (event, context, callback) => {
     });
 };
 
-function scanItems(username, area) {
-    // TBD use the area to set the scan filters
-    var params = {
-      TableName: 'piot-status-table'
-    };
-    return ddb.scan(params).promise();
-}
 
 function errorResponse(errorMessage, awsRequestId, callback) {
   callback(null, {
