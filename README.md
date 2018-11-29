@@ -12,5 +12,5 @@ http://miye-bucket2-parking.s3-website-us-west-2.amazonaws.com/signin.html
 Copy the auth token and use it in the curl command below
 
 Use the auth header to get the device states
-curl -H "Authorization: <token>" https://yopzj8fx35.execute-api.us-west-2.amazonaws.com/test@Latitude=1&Longitude=2 
+curl -H "Authorization: <token>" https://yopzj8fx35.execute-api.us-west-2.amazonaws.com/test?Latitude=100&Longitude=2&Radius=10
 
