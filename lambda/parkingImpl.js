@@ -1,17 +1,8 @@
 const latitudeTolerance = 10;
 const longitudeTolerance = 10;
 module.exports = {
-  getArea: function(parkingLocation) {
-      console.log('getArea location: ', parkingLocation.Latitude, ', ', parkingLocation.Longitude);
-      return {
-        minLatitude: parkingLocation.Latitude - latitudeTolerance,
-        maxLatitude: parkingLocation.Latitude + latitudeTolerance,
-        minLongitude: parkingLocation.Longitude - longitudeTolerance,
-        maxLogitude: parkingLocation.Longitude - longitudeTolerance
-      };
-  },
 
-  getData: function(ddb, username, area) {
+  getData: function(ddb, username, parkingLocation) {
     // TBD use the area to set the scan filters and the empty filter
     var params = {
       TableName: 'piot-status-table'

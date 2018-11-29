@@ -22,9 +22,8 @@ exports.handler = (event, context, callback) => {
     parkingLocation.Latitude = event["queryStringParameters"]['Latitude'];
     parkingLocation.Longitude = event["queryStringParameters"]['Longitude'];
 
-    const area = parkingImpl.getArea(parkingLocation);
-    parkingImpl.getData(ddb, username, area).then(data => {
-        var spots = parkingImpl.getSpots(data, area);
+    parkingImpl.getData(ddb, username, parkingLocation).then(data => {
+        var spots = parkingImpl.getSpots(data);
 
         // Because this Lambda function is called by an API Gateway proxy integration
         // the result object must use the following structure.
