@@ -3,6 +3,6 @@
     "Statement" :[{
         "Effect":"Allow",
         "Action":"dynamodb:PutItem",
-        "Resource":"arn:aws:dynamodb:us-west-2:082880322489:table/piot-status-table"
+        "Resource":"arn:aws:dynamodb:us-west-2:###:table/piot-status-table"
     }]
 }
