@@ -10,8 +10,8 @@ if(process.argv.length < 7) {
 var NODE_ID = process.argv[2];
 var certs = process.argv[3];
 var area = process.argv[4];
-var lat = process.argv[5];
-var lon = process.argv[6];
+var lat = parseFloat(process.argv[5]);
+var lon = parseFloat(process.argv[6]);
 var TAG = '[' + NODE_ID + ']';
 console.log(TAG, 'Connecting deviceId:', NODE_ID, ' area:', area, ' at lat:', lat, ' lon:', lon,  ' ...');
 var thingShadow = awsIot.thingShadow({

@@ -14,15 +14,15 @@ exports.handler = (event, context, callback) => {
 
     const username = event.requestContext.authorizer.claims['cognito:username'];
     // const requestBody = JSON.parse(event.body);
-    const parkingLocation = {};
     //if(event["queryStringParamaters"] === undefined) {
     //  errorResponse('queryStringParameters not specified', context.awsRequestId, callback);
     //  return;
     //}
-    parkingLocation.Latitude = event["queryStringParameters"]['Latitude'];
-    parkingLocation.Longitude = event["queryStringParameters"]['Longitude'];
+    var lat = event["queryStringParameters"]['Latitude'];
+    var lon = event["queryStringParameters"]['Longitude'];
+    var radius = event["queryStringParameters"]['Radius'];
 
-    parkingImpl.getData(ddb, username, parkingLocation).then(data => {
+    parkingImpl.getData(ddb, username, lat, lon, radius).then(data => {
         var spots = parkingImpl.getSpots(data);
 
         // Because this Lambda function is called by an API Gateway proxy integration
