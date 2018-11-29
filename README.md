@@ -4,7 +4,7 @@ https://miyesite.atlassian.net/wiki/spaces/MIYESPACE1/pages/2392065/Parking+Spac
 
 Get the certificates into psensor/certs/piot
 Run the following command from psensor
-> node psensorapp.js <device-id> <certsdir> <area> <lat> <lon>
+> node psensorapp.js device-id certsdir area latitude longitude
 e.g. node psensorapp.js piot-device1 certs/piot area1 22 33
 
 Generate an auth header
