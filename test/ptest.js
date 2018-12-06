@@ -54,11 +54,11 @@ function handleToken(accessToken, idToken) {
             if(error != null)
                 console.log('error:', error); // Print the error if one occurred
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+            console.log(body);
             result = JSON.parse(body);
-            console.log(result);
-            //result.foreach(function(item) {
-            //    console.log(item);
-            //}); 
+            console.log("Parking available at:");
+            for (i = 0; i < result.length; i++)  
+                console.log(result[i].reported.geoLocation);
         }
     );
 }
