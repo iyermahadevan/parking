@@ -18,9 +18,32 @@ exports.handler = (event, context, callback) => {
     //  errorResponse('queryStringParameters not specified', context.awsRequestId, callback);
     //  return;
     //}
-    var lat = event["queryStringParameters"]['Latitude'];
-    var lon = event["queryStringParameters"]['Longitude'];
-    var radius = event["queryStringParameters"]['Radius'];
+
+    var lat = 0;
+    var lon = 0;
+    var radius = 0;
+    try {
+      var latStr = event["queryStringParameters"]['Latitude'];
+      var lonStr = event["queryStringParameters"]['Longitude'];
+      var radiusStr = event["queryStringParameters"]['Radius'];
+      lat = parseFloat(latStr);
+      lon = parseFloat(lonStr);
+      radius = parseFloat(radiusStr);
+      if (isNaN(lat)) {
+        throw(new Error("Invalid latitude:"+ latStr));
+      }
+      if (isNaN(lon)) {
+        throw(new Error("Invalid longitude:"+ lonStr));
+      }
+      if (isNaN(radius)) {
+        throw(new Error("Invalid radius:"+ radiusStr));
+      }
+    }
+    catch(err) {
+      console.error(err);
+      errorResponse("queryString:" + err.message, context.awsRequestId, callback);
+      return;
+    }
 
     parkingImpl.getData(ddb, username, lat, lon, radius).then(data => {
         var spots = parkingImpl.getSpots(data);

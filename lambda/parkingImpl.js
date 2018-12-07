@@ -1,19 +1,7 @@
 module.exports = {
 
-  getData: function(ddb, username, latStr, lonStr, radiusStr) {
-    var lat = parseFloat(latStr);
-    var lon = parseFloat(lonStr);
-    var radius = parseFloat(radiusStr);
-    if (isNaN(lat)) {
-      throw(new Error("Invalid latitude:"+ latStr));
-    }
-    if (isNaN(lon)) {
-      throw(new Error("Invalid longitude:"+ lonStr));
-    }
-    if (isNaN(radius)) {
-      throw(new Error("Invalid radius:"+ radiusStr));
-    }
-    console.log(lat, lon, radius);
+  getData: function(ddb, username, lat, lon, radius) {
+    console.log('getData: ', lat, lon, radius);
     var minLat = lat - radius;
     var maxLat = lat + radius;
     var minLon = lon - radius;
