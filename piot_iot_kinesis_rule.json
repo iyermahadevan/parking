@@ -1,0 +1,11 @@
+{
+    "sql":"SELECT * from '$aws/things/+/shadow/update/accepted'",
+    "ruleDisabled": false,
+    "actions": [{
+        "kinesis": {
+            "roleArn": "arn:aws:iam::###:role/piot-iot-kinesis-role",
+            "streamName":"piot-kinesis-stream",
+            "partitionKey":"$${newuuid()}"
+        }
+    }]
+}
