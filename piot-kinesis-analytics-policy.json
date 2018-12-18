@@ -1,0 +1,22 @@
+{
+    "Version":"2012-10-17",
+    "Statement" :[
+        {
+            "Sid": "ReadInputKinesis",
+            "Effect": "Allow",
+            "Action": [
+                "kinesis:DescribeStream",
+                "kinesis:GetShardIterator",
+                "kinesis:GetRecords"
+            ],
+            "Resource": [
+                "arn:aws:kinesis:us-west-2:###:stream/piot-kinesis-stream"
+            ]
+        },    
+        {
+            "Effect":"Allow",
+            "Action":"lambda:InvokeFunction",
+            "Resource":"*"
+        }
+    ]
+}
