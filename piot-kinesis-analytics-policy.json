@@ -10,7 +10,7 @@
                 "kinesis:GetRecords"
             ],
             "Resource": [
-                "arn:aws:kinesis:us-west-2:###:stream/piot-kinesis-stream"
+                "arn:aws:kinesis:us-west-2:###:stream/piot-iot-kinesis-stream"
             ]
         },    
         {

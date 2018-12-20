@@ -5,6 +5,6 @@
         "Action":[
             "kinesis:PutRecord"
         ],
-        "Resource":"arn:aws:kinesis:us-west-2:###:stream/piot-kinesis-stream"
+        "Resource":"arn:aws:kinesis:us-west-2:###:stream/piot-iot-kinesis-stream"
     }]
 }
