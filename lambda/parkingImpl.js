@@ -1,13 +1,13 @@
 module.exports = {
 
-  getData: function(ddb, username, lat, lon, radius) {
+  getData: function(ddb, piotStatusTable, username, lat, lon, radius) {
     console.log('getData: ', lat, lon, radius);
     var minLat = lat - radius;
     var maxLat = lat + radius;
     var minLon = lon - radius;
     var maxLon = lon + radius;
     var params = {
-      TableName: "piot-status-table",
+      TableName: piotStatusTable,
       FilterExpression: '#payload.#state.#reported.#empty = :emptyValue \
                         and #payload.#state.#reported.#geoLocation.#latitude >= :minLatValue \
                         and #payload.#state.#reported.#geoLocation.#latitude <= :maxLatValue \

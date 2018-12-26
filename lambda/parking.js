@@ -6,6 +6,8 @@ const ddb = new AWS.DynamoDB.DocumentClient();
 
 const parkingImpl = require('parkingImpl');
 
+let piotStatusTable = process.env.PiotStatusTable;
+
 exports.handler = (event, context, callback) => {
     if (!event.requestContext.authorizer) {
       errorResponse('Authorization not configured', context.awsRequestId, callback);
@@ -45,7 +47,7 @@ exports.handler = (event, context, callback) => {
       return;
     }
 
-    parkingImpl.getData(ddb, username, lat, lon, radius).then(data => {
+    parkingImpl.getData(ddb, piotStatusTable, username, lat, lon, radius).then(data => {
         var spots = parkingImpl.getSpots(data);
 
         // Because this Lambda function is called by an API Gateway proxy integration
