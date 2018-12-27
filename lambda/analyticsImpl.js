@@ -13,10 +13,8 @@ module.exports = {
         }
         ddb.putItem(params, function(err, data) {
             if(err) {
-                console.log(err);
-            }
-            else {
-                console.log('Success', data)
+                throw new Error(err);
+                // console.log(err);
             }
         });
         console.log('addRow item:', item);

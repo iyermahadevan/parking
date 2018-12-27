@@ -10,10 +10,15 @@ const analyticsImpl = require('../lambda/analyticsImpl');
 
 console.log('analyticsImplTest');
 
-let tableName = "piot-statistics-table";
+let tableName = process.env.PiotStatisticsTable;
 let ts = (new Date()).toUTCString();
 let deviceId = 'piot-device1';
 let area = 'a1';
 let activity = 12;
 
-analyticsImpl.addRow(ddb, tableName, ts, deviceId,  area, ts, activity);
+try {
+    analyticsImpl.addRow(ddb, tableName, ts, deviceId,  area, ts, activity);
+}
+catch(err) {
+    console.log('analyticsImplTest:', err);
+}
