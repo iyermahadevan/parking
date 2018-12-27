@@ -1,0 +1,56 @@
+Resources:
+  TestStatusTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    Properties:
+      TableName: test-status-table
+      AttributeDefinitions:
+        -
+          AttributeName: deviceId
+          AttributeType: S
+      KeySchema:
+        -
+          AttributeName: deviceId
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+  TestIoTRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: Allow
+            Principal:
+              Service:
+                - iot.amazonaws.com
+            Action:
+              - sts:AssumeRole
+  TestIoTPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: test_iot_policy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: Allow
+            Action: 
+              - dynamodb:PutItem
+            Resource: { "Fn::GetAtt": [TestStatusTable, Arn]}
+      Roles: [ {Ref: TestIoTRole}]
+  TestIoTRule:
+    Type: AWS::IoT::TopicRule
+    Properties:
+        TopicRulePayload:
+          RuleDisabled: false
+          Sql: "SELECT * from '$aws/things/+/shadow/update/accepted'"
+          Actions:
+            -
+              DynamoDB:
+                TableName: { Ref: TestStatusTable }
+                HashKeyField: "deviceId"
+                HashKeyValue: "${topic(3)}"
+                RoleArn: { "Fn::GetAtt": [TestIoTRole, Arn]}

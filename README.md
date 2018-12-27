@@ -11,3 +11,13 @@ Run the following command from test to start ptest
 > node ptest.js username password latitude longitude radius
 e.g. node ptest.js user1 password1 200 10 10
 
+Using Cloud Formation
+---------------------
+Note: The certificate has to be created in the console and downloaded to the device
+
+aws cloudformation delete-stack --stack-name miye-stack1 (If present)
+aws cloudformation create-stack --template-body file://setupDevice.yml --stack-name miye-stack1 --parameters ParameterKey=KeyName,ParameterValue=Value
+
+
+aws cloudformation delete-stack --stack-name miye-stack2 (If present)
+aws cloudformation create-stack --template-body file://setupIoT.yml --stack-name miye-stack2 --capabilities CAPABILITY_IAM

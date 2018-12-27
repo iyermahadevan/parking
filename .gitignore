@@ -2,4 +2,5 @@ node_modules
 */certs
 arn
 package-lock.json
+*/*.pem
 */*.zip

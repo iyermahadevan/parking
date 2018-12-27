@@ -1,0 +1,37 @@
+# Add things
+# Create policy that allows things to publish shadow
+Resources:
+  IoTThing:
+    Type: AWS::IoT::Thing
+    Properties:
+      ThingName: 
+        Ref: "DeviceName"
+  IoTThingPolicy:
+    Type: AWS::IoT::Policy
+    Properties:
+      PolicyDocument: 
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Action: 
+              - "iot:*"
+            Resource:
+              - "*"
+  IoTThingPrincipalPolicyAttachment:
+    Type: AWS::IoT::PolicyPrincipalAttachment
+    Properties:
+      PolicyName: { Ref: IoTThingPolicy }
+      Principal: { Ref: "CertArn" }
+  IoTThingPrincipalAttachmentCert:
+    Type: AWS::IoT::ThingPrincipalAttachment
+    Properties:
+      ThingName: { Ref: IoTThing}
+      Principal: { Ref: "CertArn" }
+Parameters:
+  # ThingType does not work
+  DeviceName: 
+    Type: "String"
+    Default: "test-device0"
+  CertArn:
+    Type: "String"
+    Default: "arn:aws:iot:us-west-2:082880322489:cert/8107ed43ca3dff72def1a1ee8e473fc825b4d86c6962ccdf226f476ee6089e53"
