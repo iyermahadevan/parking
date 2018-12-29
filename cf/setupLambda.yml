@@ -43,6 +43,6 @@ Resources:
       Role: {"Fn::GetAtt":[TestLambdaRole, Arn]}
       Environment:
         Variables:
-          TestStatusTable: test-status-table
+          PiotStatusTable: test-status-table
 
   
