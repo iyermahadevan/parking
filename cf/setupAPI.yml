@@ -1,0 +1,46 @@
+#Setup the cognito user pool and application client
+Resources:
+  TestUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: test-user-pool
+      Schema:
+        - Mutable: false
+          Name: email
+          Required: true
+        - Mutable: false
+          Name: name
+          Required: true
+      AutoVerifiedAttributes: [email]
+  TestAppClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: test-app-client
+      UserPoolId: !Ref TestUserPool
+  TestAPIRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      RoleName: test-api-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - apigateway.amazonaws.com
+            Action: 
+              - sts:AssumeRole
+  TestAPIPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: test-api-policy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - lambda:invokeFunction
+            Resource:
+              - "*"
+      Roles: [{Ref : TestAPIRole}]
+

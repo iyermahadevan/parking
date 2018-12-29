@@ -1,0 +1,48 @@
+Resources:
+  TestLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: 
+                - lambda.amazonaws.com
+            Action: 
+              - sts:AssumeRole
+  TestLambdaPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: test_lambda_policy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource: 
+              - "*"
+          - Effect: Allow
+            Action:
+              - dynamoDB:Scan
+            Resource: 
+              - "*"
+      Roles: [ {Ref: TestLambdaRole}]
+  TestLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: test-lambda
+      Handler: parking.handler
+      Runtime: nodejs8.10
+      Code:
+        S3Bucket: test-parking-bucket
+        S3Key: parking.zip
+      Role: {"Fn::GetAtt":[TestLambdaRole, Arn]}
+      Environment:
+        Variables:
+          TestStatusTable: test-status-table
+
+  
