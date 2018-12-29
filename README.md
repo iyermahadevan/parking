@@ -21,3 +21,7 @@ aws cloudformation create-stack --template-body file://setupDevice.yml --stack-n
 
 aws cloudformation delete-stack --stack-name miye-stack2 (If present)
 aws cloudformation create-stack --template-body file://setupIoT.yml --stack-name miye-stack2 --capabilities CAPABILITY_IAM
+
+aws cloudformation create-stack --template-body file://setupCognito.yml --stack-name miye-stack3 --capabilities CAPABILITY_IAM
+
+aws cloudformation create-stack --template-body file://setupLambda.yml --stack-name miye-stack4 --capabilities CAPABILITY_NAMED_IAM
