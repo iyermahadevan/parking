@@ -56,7 +56,7 @@ Resources:
       RestApiId: !Ref TestAPI
       IdentitySource: method.request.header.Authorization
       Type: COGNITO_USER_POOLS
-      ProviderARNs: ["arn:aws:cognito-idp:us-west-2:082880322489:userpool/us-west-2_c9xtJ9FZz"]
+      ProviderARNs: ["Fn::GetAtt": [TestUserPool, Arn]]
   TestAPIResource:
     Type: AWS::ApiGateway::Resource
     Properties:

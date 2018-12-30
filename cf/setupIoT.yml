@@ -5,11 +5,11 @@ Resources:
     Properties:
       TableName: test-status-table
       AttributeDefinitions:
-        -
+        - 
           AttributeName: deviceId
           AttributeType: S
       KeySchema:
-        -
+        - 
           AttributeName: deviceId
           KeyType: HASH
       ProvisionedThroughput:
@@ -21,8 +21,7 @@ Resources:
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
-          -
-            Effect: Allow
+          - Effect: Allow
             Principal:
               Service:
                 - iot.amazonaws.com
@@ -35,8 +34,7 @@ Resources:
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
-          -
-            Effect: Allow
+          - Effect: Allow
             Action: 
               - dynamodb:PutItem
             Resource: { "Fn::GetAtt": [TestStatusTable, Arn]}
@@ -48,8 +46,7 @@ Resources:
           RuleDisabled: false
           Sql: "SELECT * from '$aws/things/+/shadow/update/accepted'"
           Actions:
-            -
-              DynamoDB:
+            - DynamoDB:
                 TableName: { Ref: TestStatusTable }
                 HashKeyField: "deviceId"
                 HashKeyValue: "${topic(3)}"

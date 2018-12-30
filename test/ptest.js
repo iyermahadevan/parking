@@ -2,16 +2,19 @@ global.fetch = require('node-fetch')
 const AWS = require("aws-sdk");
 var AmazonCognitoIdentity = require("amazon-cognito-identity-js");
 
-if(process.argv.length < 7) {
-    console.log('Usage: node psensorapp.js <username> <password> <latitude> <longitude> <radius>');
+if(process.argv.length < 10) {
+    console.log('Usage: node psensorapp.js <apiId> <poolId> <clientId> <username> <password> <latitude> <longitude> <radius>');
     process.exit();
 }
 
-var username = process.argv[2];
-var password = process.argv[3];
-var latitude = process.argv[4];
-var longitude = process.argv[5];
-var radius = process.argv[6];
+var apiId = process.argv[2];
+var poolId = process.argv[3];
+var clientId = process.argv[4];
+var username = process.argv[5];
+var password = process.argv[6];
+var latitude = process.argv[7];
+var longitude = process.argv[8];
+var radius = process.argv[9];
 
 var authenticationData = {
     Username : username,
@@ -19,8 +22,8 @@ var authenticationData = {
 };
 var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
 var poolData = { 
-    UserPoolId : 'us-west-2_c9xtJ9FZz',
-    ClientId : '143m8ict683r4qk9n0d276ofva'
+    UserPoolId : poolId,
+    ClientId : clientId
 };
 var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 var userData = {
@@ -45,7 +48,7 @@ cognitoUser.authenticateUser(authenticationDetails, {
 function handleToken(accessToken, idToken) {
     console.log('accessToken:', accessToken, ' idToken:', idToken);
     const request = require('request');
-    var baseURL = "https://e41b8t8e26.execute-api.us-west-2.amazonaws.com/test/parking";
+    var baseURL = "https://" + apiId + ".execute-api.us-west-2.amazonaws.com/test/parking";
     // var baseURL =  "https://yopzj8fx35.execute-api.us-west-2.amazonaws.com/test";
     var url =  baseURL + "?" +
         "Latitude=" + latitude + 
