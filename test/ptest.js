@@ -45,7 +45,9 @@ cognitoUser.authenticateUser(authenticationDetails, {
 function handleToken(accessToken, idToken) {
     console.log('accessToken:', accessToken, ' idToken:', idToken);
     const request = require('request');
-    var url =  "https://yopzj8fx35.execute-api.us-west-2.amazonaws.com/test?" +
+    var baseURL = "https://e41b8t8e26.execute-api.us-west-2.amazonaws.com/test/parking";
+    // var baseURL =  "https://yopzj8fx35.execute-api.us-west-2.amazonaws.com/test";
+    var url =  baseURL + "?" +
         "Latitude=" + latitude + 
         "&Longitude=" + longitude +
         "&Radius=" + radius;

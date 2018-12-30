@@ -25,3 +25,5 @@ aws cloudformation create-stack --template-body file://setupIoT.yml --stack-name
 aws cloudformation create-stack --template-body file://setupCognito.yml --stack-name miye-stack3 --capabilities CAPABILITY_IAM
 
 aws cloudformation create-stack --template-body file://setupLambda.yml --stack-name miye-stack4 --capabilities CAPABILITY_NAMED_IAM
+
+aws cloudformation create-stack --template-body file://setupAPI.yml --stack-name miye-stack5 --capabilities CAPABILITY_NAMED_IAM

@@ -43,4 +43,34 @@ Resources:
             Resource:
               - "*"
       Roles: [{Ref : TestAPIRole}]
+  TestAPI:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: test-api
+      Description: API use for parking info
+      FailOnWarnings: true
+  TestAPIAuthorizer:
+    Type: AWS::ApiGateway::Authorizer
+    Properties:
+      Name: test-api-authorizer
+      RestApiId: !Ref TestAPI
+      IdentitySource: method.request.header.Authorization
+      Type: COGNITO_USER_POOLS
+      ProviderARNs: ["arn:aws:cognito-idp:us-west-2:082880322489:userpool/us-west-2_c9xtJ9FZz"]
+  TestAPIResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref TestAPI
+      ParentId: {"Fn::GetAtt": [TestAPI, RootResourceId]}
+      PathPart: parking
+  TestAPIMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      ResourceId: !Ref TestAPIResource
+      HttpMethod: GET
+      RestApiId: !Ref TestAPI
+      AuthorizationType: COGNITO_USER_POOLS
+      AuthorizerId: !Ref TestAPIAuthorizer
+
+
 
