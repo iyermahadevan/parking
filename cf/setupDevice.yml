@@ -1,5 +1,3 @@
-# Add things
-# Create policy that allows things to publish shadow
 Resources:
   IoTThing:
     Type: AWS::IoT::Thing
@@ -34,4 +32,4 @@ Parameters:
     Default: "test-device0"
   CertArn:
     Type: "String"
-    Default: "arn:aws:iot:us-west-2:082880322489:cert/8107ed43ca3dff72def1a1ee8e473fc825b4d86c6962ccdf226f476ee6089e53"
+    Default: "arn:aws:iot:us-west-2:###:cert/8107ed43ca3dff72def1a1ee8e473fc825b4d86c6962ccdf226f476ee6089e53"
